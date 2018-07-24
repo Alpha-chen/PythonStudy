@@ -3,9 +3,9 @@
 '进程线程'
 __author__ = 'click'
 __date__ = '2018/7/20 下午6:02'
-import os
+import os, time, random
 
-from multiprocessing import Process
+from multiprocessing import Process, Pool
 
 print("当前进程的ID %s" % (os.getpid()))
 
@@ -31,3 +31,25 @@ if __name__ == '__main__':
     p.start()
     p.join()
     print('执行完了')
+
+
+# 多进程代码实现
+
+def long_time_task(name):
+    print('Run task %s (%s)...' % (name, os.getpid()))
+    start = time.time()
+    time.sleep(random.random() * 3)
+    end = time.time()
+    print('Task %s runs %0.2f seconds.' % (name, (end - start)))
+
+
+if __name__ == '__main__':
+    print('Parent process %s.' % os.getpid())
+    p = Pool(4)
+    for i in range(5):
+        p.apply_async(long_time_task, args=(i,))
+    print('Waiting for all subprocesses done...')
+    # 必须要先进行close,然后才能进行join()
+    p.close()
+    p.join()
+    print('All subprocesses done.')
