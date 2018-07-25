@@ -20,11 +20,13 @@
 # \ \ `-. \_ __\ /__ _/ .-` / /
 # ======`-.____`-.___\_____/___.-`____.-'======
 # `=---='
-#          .............................................
+# .............................................
 #           佛曰：bug泛滥，我已瘫痪！
 #
 
 '多线程变量优化,单个线程只是用当前线程的变量'
+'一个ThreadLocal变量虽然是全局变量，但每个线程都只能读写自己线程的独立副本' \
+'，互不干扰。ThreadLocal解决了参数在一个线程中各个函数之间互相传递的问题。'
 __author__ = 'click'
 __date__ = '2018/7/24 下午5:44'
 
@@ -45,12 +47,12 @@ class Student(object):
 
 
 def addStudent():
-    student = threadLocal.student
-    print('当前线程是%1s,该线程是用的变量student值是%2s' % (threading.current_thread().name, student))
+    studentName = threadLocal.studentName
+    print('当前线程是%1s,该线程是用的变量student值是%2s' % (threading.current_thread().name, studentName))
 
 
 def addStudentThread(name):
-    threadLocal.student = name
+    threadLocal.studentName = name
     addStudent()
 
 
