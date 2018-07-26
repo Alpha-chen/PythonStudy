@@ -28,7 +28,7 @@ import time, threading
 balance = 0
 
 # 初始化一个锁
-lock = threading.Lock()
+# lock = threading.Lock()
 
 
 def change_it(n):
@@ -40,12 +40,12 @@ def change_it(n):
 def run_thread(n):
     for i in range(1000000):
         # 1.首先申请锁
-        lock.acquire()
-        try:
+        # lock.acquire()
+        # try:
             change_it(n)
-        finally:
+        # finally:
             # 使用try  finaly 保证执行完之后，释放锁
-            lock.release()
+            # lock.release()
 
 
 t1 = threading.Thread(target=run_thread, args=(4,))
