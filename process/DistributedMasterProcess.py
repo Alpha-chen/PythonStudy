@@ -29,33 +29,33 @@ __author__ = 'click'
 __date__ = '2018/7/25 下午1:55'
 
 import time, random, queue
+# 1.导入BaseManager模块(管理Queue,注册、获取。连接master)
 from multiprocessing.managers import BaseManager
 
-# 创建生产队列master
+# 2.创建生产队列master
 masterQueue = queue.Queue()
-# 创建消费队列,worker
-
+# 3.创建消费队列,worker
 workerQueue = queue.Queue()
 
 
-# 创建manager管理queue
+# 4.创建manager管理queue
 
 class QueueManager(BaseManager):
     pass
 
 
-# 使用baseManager将两个队列注册到网络上
+# 5.使用baseManager将两个队列注册到网络上
 
 QueueManager.register('get_master_queue', callable=lambda: masterQueue)
 QueueManager.register('get_worker_queue', callable=lambda: workerQueue)
 
-# 绑定网络端口5000,设置验证码'abc'
+# 6.绑定网络端口5000,设置验证码'abc'
 manager = QueueManager(address=('', 5000), authkey=b'abc')
 
 # 启动queue
 manager.start()
 
-# 获取到注册到网络上的生产、消费队列
+# 7.获取到注册到网络上的生产、消费队列
 
 master = manager.get_master_queue()
 

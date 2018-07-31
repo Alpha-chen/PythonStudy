@@ -38,11 +38,11 @@ class QueueManger(BaseManager):
     pass
 
 
-# 向网络中注册生产,消费队列
+# 1.向网络中注册生产,消费队列
 QueueManger.register('get_master_queue')
 QueueManger.register('get_worker_queue')
 
-# 连接到服务器,也就是运行master_queue的机器
+# 2.连接到服务器,也就是运行master_queue的机器
 
 server_addr = '127.0.0.1'
 print('连接到服务端 %s' % server_addr)
@@ -51,12 +51,12 @@ manager = QueueManger(address=(server_addr, 5000), authkey=b'abc')
 
 # 连接到服务器
 manager.connect()
-# 获取到master队列
+# 3.获取到master队列
 master = manager.get_master_queue()
 # 获取到消费worker队列
 worker = manager.get_worker_queue()
 
-# 从master中获取任务,并放到worker队列中
+# 4.从master中获取任务,并放到worker队列中
 
 for i in range(10):
     try:
