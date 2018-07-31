@@ -47,12 +47,12 @@ class Student(object):
 
 
 def addStudent():
-    studentName = threadLocal.studentName
-    print('当前线程是%1s,该线程是用的变量student值是%2s' % (threading.current_thread().name, studentName))
+    student = threadLocal.studentName
+    print('当前线程是%1s,该线程是用的变量student值是%2s' % (threading.current_thread().name, student.__repr__))
 
 
 def addStudentThread(name):
-    threadLocal.studentName = name
+    threadLocal.studentName = Student(name)
     addStudent()
 
 
